@@ -1,0 +1,569 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actor">
+          <Key>
+            <PropertyRef Name="act_id" />
+          </Key>
+          <Property Name="act_id" Type="int" Nullable="false" />
+          <Property Name="act_fname" Type="nchar" MaxLength="10" />
+          <Property Name="act_lname" Type="nchar" MaxLength="10" />
+          <Property Name="act_gender" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Director">
+          <Key>
+            <PropertyRef Name="dir_id" />
+          </Key>
+          <Property Name="dir_id" Type="int" Nullable="false" />
+          <Property Name="dir_fname" Type="nchar" MaxLength="10" />
+          <Property Name="dir_lname" Type="nchar" MaxLength="10" />
+          <Property Name="dir_gender" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="genid" />
+          </Key>
+          <Property Name="genid" Type="int" Nullable="false" />
+          <Property Name="gen_Title" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="mov_id" />
+          </Key>
+          <Property Name="mov_id" Type="int" Nullable="false" />
+          <Property Name="mov_title" Type="nchar" MaxLength="10" />
+          <Property Name="mov_year" Type="int" />
+          <Property Name="mov_time " Type="time" Precision="7" />
+          <Property Name="mov_lang" Type="nchar" MaxLength="10" />
+          <Property Name="mov_dt_rel" Type="date" />
+          <Property Name="mov_rel_country " Type="nchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Movie_Cast">
+          <Key>
+            <PropertyRef Name="act_id" />
+          </Key>
+          <Property Name="act_id" Type="int" Nullable="false" />
+          <Property Name="mov_id" Type="int" />
+          <Property Name="role" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Movie_Dir">
+          <Key>
+            <PropertyRef Name="mov_id" />
+          </Key>
+          <Property Name="mov_id" Type="int" Nullable="false" />
+          <Property Name="dir_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Movie_Genre">
+          <Key>
+            <PropertyRef Name="mov_id" />
+          </Key>
+          <Property Name="mov_id" Type="int" Nullable="false" />
+          <Property Name="gen_id" Type="int" />
+        </EntityType>
+        <EntityType Name="rating">
+          <Key>
+            <PropertyRef Name="mov_id" />
+          </Key>
+          <Property Name="mov_id" Type="int" Nullable="false" />
+          <Property Name="rev_id" Type="int" />
+          <Property Name="rev_stars" Type="int" />
+          <Property Name="num_o_ratings" Type="int" />
+        </EntityType>
+        <EntityType Name="Reviwer">
+          <Key>
+            <PropertyRef Name="Rev_id" />
+          </Key>
+          <Property Name="Rev_id" Type="int" Nullable="false" />
+          <Property Name="rev_name" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Movie_Cast_Actor">
+          <End Role="Actor" Type="Self.Actor" Multiplicity="1" />
+          <End Role="Movie_Cast" Type="Self.Movie_Cast" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Actor">
+              <PropertyRef Name="act_id" />
+            </Principal>
+            <Dependent Role="Movie_Cast">
+              <PropertyRef Name="act_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Cast_Movie">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+          <End Role="Movie_Cast" Type="Self.Movie_Cast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="mov_id" />
+            </Principal>
+            <Dependent Role="Movie_Cast">
+              <PropertyRef Name="mov_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Dir_Director">
+          <End Role="Director" Type="Self.Director" Multiplicity="0..1" />
+          <End Role="Movie_Dir" Type="Self.Movie_Dir" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Director">
+              <PropertyRef Name="dir_id" />
+            </Principal>
+            <Dependent Role="Movie_Dir">
+              <PropertyRef Name="dir_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Dir_Movie">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Movie_Dir" Type="Self.Movie_Dir" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="mov_id" />
+            </Principal>
+            <Dependent Role="Movie_Dir">
+              <PropertyRef Name="mov_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Genre_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="Movie_Genre" Type="Self.Movie_Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="genid" />
+            </Principal>
+            <Dependent Role="Movie_Genre">
+              <PropertyRef Name="gen_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Genre_mov_id">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Movie_Genre" Type="Self.Movie_Genre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="mov_id" />
+            </Principal>
+            <Dependent Role="Movie_Genre">
+              <PropertyRef Name="mov_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rating_Movie">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="rating" Type="Self.rating" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="mov_id" />
+            </Principal>
+            <Dependent Role="rating">
+              <PropertyRef Name="mov_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rating_Reviews">
+          <End Role="Reviwer" Type="Self.Reviwer" Multiplicity="0..1" />
+          <End Role="rating" Type="Self.rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reviwer">
+              <PropertyRef Name="Rev_id" />
+            </Principal>
+            <Dependent Role="rating">
+              <PropertyRef Name="rev_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GMModelStoreContainer">
+          <EntitySet Name="Actor" EntityType="Self.Actor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Director" EntityType="Self.Director" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie_Cast" EntityType="Self.Movie_Cast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie_Dir" EntityType="Self.Movie_Dir" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movie_Genre" EntityType="Self.Movie_Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rating" EntityType="Self.rating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reviwer" EntityType="Self.Reviwer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Movie_Cast_Actor" Association="Self.FK_Movie_Cast_Actor">
+            <End Role="Actor" EntitySet="Actor" />
+            <End Role="Movie_Cast" EntitySet="Movie_Cast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Cast_Movie" Association="Self.FK_Movie_Cast_Movie">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="Movie_Cast" EntitySet="Movie_Cast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Dir_Director" Association="Self.FK_Movie_Dir_Director">
+            <End Role="Director" EntitySet="Director" />
+            <End Role="Movie_Dir" EntitySet="Movie_Dir" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Dir_Movie" Association="Self.FK_Movie_Dir_Movie">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="Movie_Dir" EntitySet="Movie_Dir" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Genre_Genre" Association="Self.FK_Movie_Genre_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Movie_Genre" EntitySet="Movie_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Genre_mov_id" Association="Self.FK_Movie_Genre_mov_id">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="Movie_Genre" EntitySet="Movie_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rating_Movie" Association="Self.FK_rating_Movie">
+            <End Role="Movie" EntitySet="Movie" />
+            <End Role="rating" EntitySet="rating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rating_Reviews" Association="Self.FK_rating_Reviews">
+            <End Role="Reviwer" EntitySet="Reviwer" />
+            <End Role="rating" EntitySet="rating" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Actor">
+          <Key>
+            <PropertyRef Name="act_id" />
+          </Key>
+          <Property Name="act_id" Type="Int32" Nullable="false" />
+          <Property Name="act_fname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="act_lname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="act_gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Movie_Cast" Relationship="Self.FK_Movie_Cast_Actor" FromRole="Actor" ToRole="Movie_Cast" />
+        </EntityType>
+        <EntityType Name="Director">
+          <Key>
+            <PropertyRef Name="dir_id" />
+          </Key>
+          <Property Name="dir_id" Type="Int32" Nullable="false" />
+          <Property Name="dir_fname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="dir_lname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="dir_gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Movie_Dir" Relationship="Self.FK_Movie_Dir_Director" FromRole="Director" ToRole="Movie_Dir" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="genid" />
+          </Key>
+          <Property Name="genid" Type="Int32" Nullable="false" />
+          <Property Name="gen_Title" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Movie_Genre" Relationship="Self.FK_Movie_Genre_Genre" FromRole="Genre" ToRole="Movie_Genre" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="mov_id" />
+          </Key>
+          <Property Name="mov_id" Type="Int32" Nullable="false" />
+          <Property Name="mov_title" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="mov_year" Type="Int32" />
+          <Property Name="mov_time_" Type="Time" Precision="7" />
+          <Property Name="mov_lang" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="mov_dt_rel" Type="DateTime" Precision="0" />
+          <Property Name="mov_rel_country_" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Movie_Cast" Relationship="Self.FK_Movie_Cast_Movie" FromRole="Movie" ToRole="Movie_Cast" />
+          <NavigationProperty Name="Movie_Dir" Relationship="Self.FK_Movie_Dir_Movie" FromRole="Movie" ToRole="Movie_Dir" />
+          <NavigationProperty Name="Movie_Genre" Relationship="Self.FK_Movie_Genre_mov_id" FromRole="Movie" ToRole="Movie_Genre" />
+          <NavigationProperty Name="rating" Relationship="GMModel.FK_rating_Movie" FromRole="Movie" ToRole="rating" />
+        </EntityType>
+        <EntityType Name="Movie_Cast">
+          <Key>
+            <PropertyRef Name="act_id" />
+          </Key>
+          <Property Name="act_id" Type="Int32" Nullable="false" />
+          <Property Name="mov_id" Type="Int32" />
+          <Property Name="role" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Actor" Relationship="Self.FK_Movie_Cast_Actor" FromRole="Movie_Cast" ToRole="Actor" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK_Movie_Cast_Movie" FromRole="Movie_Cast" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Movie_Dir">
+          <Key>
+            <PropertyRef Name="mov_id" />
+          </Key>
+          <Property Name="mov_id" Type="Int32" Nullable="false" />
+          <Property Name="dir_id" Type="Int32" />
+          <NavigationProperty Name="Director" Relationship="Self.FK_Movie_Dir_Director" FromRole="Movie_Dir" ToRole="Director" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK_Movie_Dir_Movie" FromRole="Movie_Dir" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Movie_Genre">
+          <Key>
+            <PropertyRef Name="mov_id" />
+          </Key>
+          <Property Name="mov_id" Type="Int32" Nullable="false" />
+          <Property Name="gen_id" Type="Int32" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_Movie_Genre_Genre" FromRole="Movie_Genre" ToRole="Genre" />
+          <NavigationProperty Name="Movie" Relationship="Self.FK_Movie_Genre_mov_id" FromRole="Movie_Genre" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="rating">
+          <Key>
+            <PropertyRef Name="mov_id" />
+          </Key>
+          <Property Name="mov_id" Type="Int32" Nullable="false" />
+          <Property Name="rev_id" Type="Int32" />
+          <Property Name="rev_stars" Type="Int32" />
+          <Property Name="num_o_ratings" Type="Int32" />
+          <NavigationProperty Name="Reviwer" Relationship="Self.FK_rating_Reviews" FromRole="rating" ToRole="Reviwer" />
+          <NavigationProperty Name="Movie" Relationship="GMModel.FK_rating_Movie" FromRole="rating" ToRole="Movie" />
+        </EntityType>
+        <EntityType Name="Reviwer">
+          <Key>
+            <PropertyRef Name="Rev_id" />
+          </Key>
+          <Property Name="Rev_id" Type="Int32" Nullable="false" />
+          <Property Name="rev_name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="ratings" Relationship="Self.FK_rating_Reviews" FromRole="Reviwer" ToRole="rating" />
+        </EntityType>
+        <Association Name="FK_Movie_Cast_Actor">
+          <End Role="Actor" Type="Self.Actor" Multiplicity="1" />
+          <End Role="Movie_Cast" Type="Self.Movie_Cast" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Actor">
+              <PropertyRef Name="act_id" />
+            </Principal>
+            <Dependent Role="Movie_Cast">
+              <PropertyRef Name="act_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Dir_Director">
+          <End Role="Director" Type="Self.Director" Multiplicity="0..1" />
+          <End Role="Movie_Dir" Type="Self.Movie_Dir" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Director">
+              <PropertyRef Name="dir_id" />
+            </Principal>
+            <Dependent Role="Movie_Dir">
+              <PropertyRef Name="dir_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Genre_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="Movie_Genre" Type="Self.Movie_Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="genid" />
+            </Principal>
+            <Dependent Role="Movie_Genre">
+              <PropertyRef Name="gen_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Cast_Movie">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="0..1" />
+          <End Role="Movie_Cast" Type="Self.Movie_Cast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="mov_id" />
+            </Principal>
+            <Dependent Role="Movie_Cast">
+              <PropertyRef Name="mov_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Dir_Movie">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Movie_Dir" Type="Self.Movie_Dir" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="mov_id" />
+            </Principal>
+            <Dependent Role="Movie_Dir">
+              <PropertyRef Name="mov_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movie_Genre_mov_id">
+          <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+          <End Role="Movie_Genre" Type="Self.Movie_Genre" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="mov_id" />
+            </Principal>
+            <Dependent Role="Movie_Genre">
+              <PropertyRef Name="mov_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rating_Reviews">
+          <End Role="Reviwer" Type="Self.Reviwer" Multiplicity="0..1" />
+          <End Role="rating" Type="Self.rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reviwer">
+              <PropertyRef Name="Rev_id" />
+            </Principal>
+            <Dependent Role="rating">
+              <PropertyRef Name="rev_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Actors" EntityType="Self.Actor" />
+          <EntitySet Name="Directors" EntityType="Self.Director" />
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="Movies" EntityType="Self.Movie" />
+          <EntitySet Name="Movie_Cast" EntityType="Self.Movie_Cast" />
+          <EntitySet Name="Movie_Dir" EntityType="Self.Movie_Dir" />
+          <EntitySet Name="Movie_Genre" EntityType="Self.Movie_Genre" />
+          <EntitySet Name="ratings" EntityType="Self.rating" />
+          <EntitySet Name="Reviwers" EntityType="Self.Reviwer" />
+          <AssociationSet Name="FK_Movie_Cast_Actor" Association="Self.FK_Movie_Cast_Actor">
+            <End Role="Actor" EntitySet="Actors" />
+            <End Role="Movie_Cast" EntitySet="Movie_Cast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Dir_Director" Association="Self.FK_Movie_Dir_Director">
+            <End Role="Director" EntitySet="Directors" />
+            <End Role="Movie_Dir" EntitySet="Movie_Dir" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Genre_Genre" Association="Self.FK_Movie_Genre_Genre">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="Movie_Genre" EntitySet="Movie_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Cast_Movie" Association="Self.FK_Movie_Cast_Movie">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Movie_Cast" EntitySet="Movie_Cast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Dir_Movie" Association="Self.FK_Movie_Dir_Movie">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Movie_Dir" EntitySet="Movie_Dir" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movie_Genre_mov_id" Association="Self.FK_Movie_Genre_mov_id">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="Movie_Genre" EntitySet="Movie_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rating_Reviews" Association="Self.FK_rating_Reviews">
+            <End Role="Reviwer" EntitySet="Reviwers" />
+            <End Role="rating" EntitySet="ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rating_Movie" Association="GMModel.FK_rating_Movie">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="rating" EntitySet="ratings" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_rating_Movie">
+          <End Type="GMModel.Movie" Role="Movie" Multiplicity="1" />
+          <End Type="GMModel.rating" Role="rating" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="mov_id" />
+            </Principal>
+            <Dependent Role="rating">
+              <PropertyRef Name="mov_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GMModelStoreContainer" CdmEntityContainer="GMEntities">
+          <EntitySetMapping Name="Actors">
+            <EntityTypeMapping TypeName="GMModel.Actor">
+              <MappingFragment StoreEntitySet="Actor">
+                <ScalarProperty Name="act_id" ColumnName="act_id" />
+                <ScalarProperty Name="act_fname" ColumnName="act_fname" />
+                <ScalarProperty Name="act_lname" ColumnName="act_lname" />
+                <ScalarProperty Name="act_gender" ColumnName="act_gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Directors">
+            <EntityTypeMapping TypeName="GMModel.Director">
+              <MappingFragment StoreEntitySet="Director">
+                <ScalarProperty Name="dir_id" ColumnName="dir_id" />
+                <ScalarProperty Name="dir_fname" ColumnName="dir_fname" />
+                <ScalarProperty Name="dir_lname" ColumnName="dir_lname" />
+                <ScalarProperty Name="dir_gender" ColumnName="dir_gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="GMModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="genid" ColumnName="genid" />
+                <ScalarProperty Name="gen_Title" ColumnName="gen_Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="GMModel.Movie">
+              <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="mov_id" ColumnName="mov_id" />
+                <ScalarProperty Name="mov_title" ColumnName="mov_title" />
+                <ScalarProperty Name="mov_year" ColumnName="mov_year" />
+                <ScalarProperty Name="mov_time_" ColumnName="mov_time " />
+                <ScalarProperty Name="mov_lang" ColumnName="mov_lang" />
+                <ScalarProperty Name="mov_dt_rel" ColumnName="mov_dt_rel" />
+                <ScalarProperty Name="mov_rel_country_" ColumnName="mov_rel_country " />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movie_Cast">
+            <EntityTypeMapping TypeName="GMModel.Movie_Cast">
+              <MappingFragment StoreEntitySet="Movie_Cast">
+                <ScalarProperty Name="act_id" ColumnName="act_id" />
+                <ScalarProperty Name="mov_id" ColumnName="mov_id" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movie_Dir">
+            <EntityTypeMapping TypeName="GMModel.Movie_Dir">
+              <MappingFragment StoreEntitySet="Movie_Dir">
+                <ScalarProperty Name="mov_id" ColumnName="mov_id" />
+                <ScalarProperty Name="dir_id" ColumnName="dir_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movie_Genre">
+            <EntityTypeMapping TypeName="GMModel.Movie_Genre">
+              <MappingFragment StoreEntitySet="Movie_Genre">
+                <ScalarProperty Name="mov_id" ColumnName="mov_id" />
+                <ScalarProperty Name="gen_id" ColumnName="gen_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ratings">
+            <EntityTypeMapping TypeName="GMModel.rating">
+              <MappingFragment StoreEntitySet="rating">
+                <ScalarProperty Name="mov_id" ColumnName="mov_id" />
+                <ScalarProperty Name="rev_id" ColumnName="rev_id" />
+                <ScalarProperty Name="rev_stars" ColumnName="rev_stars" />
+                <ScalarProperty Name="num_o_ratings" ColumnName="num_o_ratings" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviwers">
+            <EntityTypeMapping TypeName="GMModel.Reviwer">
+              <MappingFragment StoreEntitySet="Reviwer">
+                <ScalarProperty Name="Rev_id" ColumnName="Rev_id" />
+                <ScalarProperty Name="rev_name" ColumnName="rev_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
