@@ -27,6 +27,7 @@ namespace Globla_Movies.Models
         public string mov_lang { get; set; }
         public Nullable<System.DateTime> mov_dt_rel { get; set; }
         public string mov_rel_country_ { get; set; }
+        public byte[] mov_Art { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Movie_Cast> Movie_Cast { get; set; }

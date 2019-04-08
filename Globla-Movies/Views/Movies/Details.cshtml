@@ -1,0 +1,99 @@
+﻿@model Globla_Movies.Models.Movie
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Movie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.mov_title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mov_title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mov_year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mov_year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mov_time_)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mov_time_)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mov_lang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mov_lang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mov_dt_rel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mov_dt_rel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mov_rel_country_)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mov_rel_country_)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mov_Art)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mov_Art)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie_Dir.mov_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movie_Dir.mov_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie_Genre.mov_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movie_Genre.mov_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.rating.mov_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rating.mov_id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.mov_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

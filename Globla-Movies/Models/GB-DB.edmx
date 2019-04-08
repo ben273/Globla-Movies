@@ -41,6 +41,7 @@
           <Property Name="mov_lang" Type="nchar" MaxLength="10" />
           <Property Name="mov_dt_rel" Type="date" />
           <Property Name="mov_rel_country " Type="nchar" MaxLength="5" />
+          <Property Name="mov_Art" Type="image" />
         </EntityType>
         <EntityType Name="Movie_Cast">
           <Key>
@@ -266,6 +267,7 @@
           <NavigationProperty Name="Movie_Dir" Relationship="Self.FK_Movie_Dir_Movie" FromRole="Movie" ToRole="Movie_Dir" />
           <NavigationProperty Name="Movie_Genre" Relationship="Self.FK_Movie_Genre_mov_id" FromRole="Movie" ToRole="Movie_Genre" />
           <NavigationProperty Name="rating" Relationship="GMModel.FK_rating_Movie" FromRole="Movie" ToRole="rating" />
+          <Property Name="mov_Art" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Movie_Cast">
           <Key>
@@ -490,6 +492,7 @@
           <EntitySetMapping Name="Movies">
             <EntityTypeMapping TypeName="GMModel.Movie">
               <MappingFragment StoreEntitySet="Movie">
+                <ScalarProperty Name="mov_Art" ColumnName="mov_Art" />
                 <ScalarProperty Name="mov_id" ColumnName="mov_id" />
                 <ScalarProperty Name="mov_title" ColumnName="mov_title" />
                 <ScalarProperty Name="mov_year" ColumnName="mov_year" />
