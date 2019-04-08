@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="85ea5e68d213428f9a6a17a4a1e48415" Name="Diagram1">
+        <EntityTypeShape EntityType="GMModel.Actor" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GMModel.Director" Width="1.5" PointX="0.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GMModel.Genre" Width="1.5" PointX="7.875" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GMModel.Movie" Width="1.5" PointX="5.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GMModel.Movie_Cast" Width="1.5" PointX="3.5" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GMModel.Movie_Dir" Width="1.5" PointX="2.625" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GMModel.Movie_Genre" Width="1.5" PointX="4.875" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="GMModel.rating" Width="1.5" PointX="8" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="GMModel.Reviwer" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="GMModel.FK_Movie_Cast_Actor" ManuallyRouted="false" />
+        <AssociationConnector Association="GMModel.FK_Movie_Dir_Director" ManuallyRouted="false" />
+        <AssociationConnector Association="GMModel.FK_Movie_Genre_Genre" ManuallyRouted="false" />
+        <AssociationConnector Association="GMModel.FK_Movie_Cast_Movie" ManuallyRouted="false" />
+        <AssociationConnector Association="GMModel.FK_Movie_Dir_Movie" ManuallyRouted="false" />
+        <AssociationConnector Association="GMModel.FK_Movie_Genre_mov_id" ManuallyRouted="false" />
+        <AssociationConnector Association="GMModel.FK_rating_Reviews" ManuallyRouted="false" />
+        <AssociationConnector Association="GMModel.FK_rating_Movie" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

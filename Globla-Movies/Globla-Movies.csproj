@@ -49,6 +49,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -174,18 +176,65 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Actor.cs">
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Director.cs">
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GB-DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GB-DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GB-DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GB-DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GB-DB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Genre.cs">
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Movie.cs">
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Movie_Cast.cs">
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Movie_Dir.cs">
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Movie_Genre.cs">
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\rating.cs">
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Reviwer.cs">
+      <DependentUpon>GB-DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\GM.mdf" />
+    <Content Include="App_Data\GM_log.ldf">
+      <DependentUpon>GM.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -194,8 +243,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\GB-DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GB-DB.edmx</DependentUpon>
+      <LastGenOutput>GB-DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GB-DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GB-DB.edmx</DependentUpon>
+      <LastGenOutput>GB-DB.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\GB-DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GB-DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\GB-DB.edmx.diagram">
+      <DependentUpon>GB-DB.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -241,9 +307,14 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Genres\Create.cshtml" />
+    <Content Include="Views\Genres\Delete.cshtml" />
+    <Content Include="Views\Genres\Details.cshtml" />
+    <Content Include="Views\Genres\Edit.cshtml" />
+    <Content Include="Views\Genres\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
